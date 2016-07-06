@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "./node_modules/.bin/nodemon ./bin/www --exec './node_modules/.bin/esw -w --color'"
+    "dev": "npm run lint & ./node_modules/.bin/nodemon ./bin/www",
+    "lint": "./node_modules/.bin/esw -w --color"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
