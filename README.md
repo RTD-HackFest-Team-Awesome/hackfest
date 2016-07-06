@@ -8,6 +8,7 @@ This project comes with a basic .eslintrc for writing ES2015 style code.
 
 ```sh
 git clone https://github.com/gSchool/express-socket.io-starter.git
+cd express-socket.io-starter
 npm install
 npm run dev # starts nodemon and eslint-watch
 ```
