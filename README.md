@@ -4,6 +4,8 @@ A simple starter for creating an express app that uses socket.io
 
 This project comes with a basic .eslintrc for writing ES2015 style code.
 
+Install [linter-eslint for atom here](https://atom.io/packages/linter-eslint).
+
 # Getting Started
 
 ```sh
