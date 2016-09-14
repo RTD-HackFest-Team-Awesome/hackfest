@@ -12,6 +12,14 @@ and add this immediately below line 244:
 
 `if (!agencyEntryId) return Promise.resolve();`
 
+### Install knex globally
+
+`npm install -g knex`
+
+### Migrate DB
+
+`knex migrate:latest`
+
 ### Create gtfs DB:
 
 `node gtfs_update.js`
