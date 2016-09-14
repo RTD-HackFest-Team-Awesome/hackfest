@@ -2,16 +2,16 @@ $(() => { const socket = io();
     const map = L.map('mapid').setView([39.7392, -104.9903], 11);
     let busLayer;
     let busData;
-    let currentLat = 39.757667999999995;
-    let currentLong = -105.00731119999999;
-    let currentIcon = L.icon({
-        iconUrl: 'images/marker.png',
-        iconSize:     [20, 38], // size of the icon
-        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
-    let currentMarker = new L.marker([currentLat, currentLong], {icon: currentIcon});
-    currentMarker.addTo(map);
+    // let currentLat = 39.757667999999995;
+    // let currentLong = -105.00731119999999;
+    // let currentIcon = L.icon({
+    //     iconUrl: 'images/marker.png',
+    //     iconSize:     [20, 38], // size of the icon
+    //     iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    //     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    // });
+    // let currentMarker = new L.marker([currentLat, currentLong], {icon: currentIcon});
+    // currentMarker.addTo(map);
     const load = data => {
         busData = data;
         if (busLayer) {
@@ -31,9 +31,6 @@ $(() => { const socket = io();
                 let long = bus.vehicle.position.longitude;
                 let route = bus.vehicle.trip.route_id;
                 let busMarker = new L.marker([lat, long], {icon: busIcon, title: route});
-                busMarker.addEventListener('click', function(event) {
-                    $('.info').html(`Route: ${this.options.title}`);
-                });
                 busMarkers.push(busMarker);
             }
         });

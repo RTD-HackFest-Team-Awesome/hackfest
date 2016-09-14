@@ -1,3 +1,7 @@
+body {
+    height: 100vh;
+}
+
 #mapid { 
     height: 80vh;
     width: 100%;
@@ -5,9 +9,13 @@
 }
 
 .navbar {
-    height: 5vh;
+    height: 10vh;
     width: 100wh;
     margin-bottom: 2em;
+}
+
+.logo {
+    height: 4em;
 }
 
 .container {
