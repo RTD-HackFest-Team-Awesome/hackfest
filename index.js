@@ -12,6 +12,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 require('./sockets').initialize(io);
 
+const knexconfig = require('./knexfile');
+const knex = require('knex')(knexconfig);
+
+const gtfsdb = require('gtfsdb')(knex);
+
+app.get('/agency', (req, res, next) => {
+  gtfsdb
+    .getAllAgencies()
+    .then((agencies) => {
+      res.send(agencies);
+    })
+    .catch(next);
+});
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
