@@ -10,18 +10,24 @@ function loadPositions(callback) {
     data.push(feed);
 
     if (data.length == 2) {
-      const patch = diff(data[0].entity, data[1].entity);
+      try {
+        const patch = diff(data[0].entity, data[1].entity);
 
-      if (patch.length > 0) {
-        callback(data[1]);
+        if (patch.length > 0) {
+          callback(data[1]);
+        }
+
+        data = [data[1]];
+      } catch (e) {
+        console.log('error diffing...', e);
+      } finally {
+        setTimeout(() => {
+          loadPositions(callback);
+        }, 6000);
       }
-
-      data = [data[1]];
     }
 
-    setTimeout(() => {
-      loadPositions(callback);
-    }, 6000);
+
   });
 }
 
