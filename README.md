@@ -6,7 +6,7 @@
 
 ### Fix broken dependency
 
-Open up `.node_modules/gtfsdb/lib/download.js`
+Open up `./node_modules/gtfsdb/lib/download.js`
 
 and add this immediately below line 244:
 
