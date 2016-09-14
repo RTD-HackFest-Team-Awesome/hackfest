@@ -2,25 +2,28 @@ $(() => { const socket = io();
     const map = L.map('mapid').setView([39.7392, -104.9903], 11);
     let busLayer;
     const load = data => {
-        if (busLayer) {
-            busLayer.clearLayers();
-        }
+        console.log(data.entity)
+            if (busLayer) {
+                busLayer.clearLayers();
+            }
         let busMarkers = new Array();
-        data.forEach(bus => {
-            let busIcon = L.icon({
-                iconUrl: 'images/bus.png',
-                iconSize:     [38, 38], // size of the icon
-                iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
-            let lat = bus.latitude;
-            let long = bus.longitude;
-            let route = bus.route;
-            let busMarker = new L.marker([lat, long], {icon: busIcon, title: route});
-            busMarker.addEventListener('click', function(event) {
-                $('.info').html(`Route: ${this.options.title}`);
-            });
-            busMarkers.push(busMarker);
+        data.entity.forEach(bus => {
+            if (bus.vehicle.trip) {
+                let busIcon = L.icon({
+                    iconUrl: 'images/bus.png',
+                    iconSize:     [38, 38], // size of the icon
+                    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                });
+                let lat = bus.vehicle.position.latitude;
+                let long = bus.vehicle.position.longitude;
+                let route = bus.vehicle.trip.route_id;
+                let busMarker = new L.marker([lat, long], {icon: busIcon, title: route});
+                busMarker.addEventListener('click', function(event) {
+                    $('.info').html(`Route: ${this.options.title}`);
+                });
+                busMarkers.push(busMarker);
+            }
         });
         busLayer = new L.layerGroup(busMarkers);
         busLayer.addTo(map);
@@ -49,7 +52,7 @@ $(() => { const socket = io();
             id: '1',
             accessToken: 'pk.eyJ1IjoiYmVydG9vcnQiLCJhIjoiY2lzeHV4NnF0MGF4ZzJ6cXBuY3RybXIzNCJ9.5q6gLtoI8Acuto71lC8GsQ'
             }).addTo(map);
-    socket.on('info', load);
+    socket.on('data', load);
 });
 
 

@@ -1,9 +1,17 @@
-body {
-    padding: 1em;
-}
 #mapid { 
     height: 80vh;
     width: 100%;
+}
+
+.navbar {
+    height: 5vh;
+    width: 100wh;
+    margin-bottom: 2em;
+}
+
+.container {
+    padding-left: 1em;    
+    padding-right: 1em;    
 }
 
 .radio-custom {
