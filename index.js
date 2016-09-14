@@ -16,6 +16,7 @@ const io = require('socket.io')(server);
 require('./sockets').initialize(io);
 
 app.use('/api/gtfs', require('./routes/gtfs'));
+app.use('/api/foodbanks', require('./routes/foodbank'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

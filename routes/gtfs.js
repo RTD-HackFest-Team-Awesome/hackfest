@@ -24,13 +24,25 @@ router.get('/agency/:agency/route', (req, res, next) => {
 });
 
 router.get('/agency/:agency/route/:routeId', (req, res) => {
-  const agencyKey = req.params.agency;
-  const routeId = req.params.routeId;
+  const agency_key = req.params.agency;
+  const route_id = req.params.routeId;
 
   gtfsdb.getRoute(agencyKey, routeId)
   .then((data) => {
     res.send(data);
   });
+
+  knex('stops')
+    .select('stops.stop_id', 'stops.stop_name')
+    .where({
+      route_id,
+      agency_key
+    })
+    .join('stop_time', 'stop_times.trip_id', 'trips.trip_id')
+    .join('stop', 'stop.stop_id', 'stop_time.stop_id');
+
+
+
 });
 
 router.get('/agency/:agency/trip', (req, res, next) => {
