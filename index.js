@@ -14,19 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 require('./sockets').initialize(io);
 
-const knexconfig = require('./knexfile');
-const knex = require('knex')(knexconfig);
-
-const gtfsdb = require('gtfsdb')(knex);
-
-app.get('/agency', (req, res, next) => {
-  gtfsdb
-    .getAllAgencies()
-    .then((agencies) => {
-      res.send(agencies);
-    })
-    .catch(next);
-});
+app.use('/api/gtfs', require('./routes/gtfs'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
