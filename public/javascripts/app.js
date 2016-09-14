@@ -1,14 +1,26 @@
 $(() => { const socket = io();
     const map = L.map('mapid').setView([39.7392, -104.9903], 11);
     let busLayer;
+    let busData;
+    let currentLat = 39.757667999999995;
+    let currentLong = -105.00731119999999;
+    let currentIcon = L.icon({
+        iconUrl: 'images/marker.png',
+        iconSize:     [20, 38], // size of the icon
+        iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    });
+    let currentMarker = new L.marker([currentLat, currentLong], {icon: currentIcon});
+    currentMarker.addTo(map);
     const load = data => {
-        console.log(data.entity)
-            if (busLayer) {
-                busLayer.clearLayers();
-            }
+        busData = data;
+        if (busLayer) {
+            busLayer.clearLayers();
+        }
         let busMarkers = new Array();
+        var route = $('input[type=radio]:checked').val();
         data.entity.forEach(bus => {
-            if (bus.vehicle.trip) {
+            if (bus.vehicle.trip && bus.vehicle.trip.route_id == route) {
                 let busIcon = L.icon({
                     iconUrl: 'images/bus.png',
                     iconSize:     [38, 38], // size of the icon
@@ -30,18 +42,23 @@ $(() => { const socket = io();
     }
 
     const displayRoutes = routes => {
-        console.log(routes);
         routes.forEach(route => {
             $('.routes').append(`
                     <div>
-                    <input id="${route.route_short_name}" class="radio-custom" name="radio-group" type="radio" checked>
+                    <input id="${route.route_short_name}" class="radio-custom" name="radio-group" value="${route.route_short_name}" type="radio">
                     <label for="${route.route_short_name}" class="radio-custom-label">${route.route_short_name}</label>
                     </div>
                     `)
         }); 
+        $('input[type=radio]').click(() => {
+            if (busData) {
+                load(busData);
+            }
+        });
+
     }
 
-    $.get('/routes')
+    $.get('/api/gtfs/agency/RTD/route')
         .done( routes => {
             displayRoutes(routes);
         }); 

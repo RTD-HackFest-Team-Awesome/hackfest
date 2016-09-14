@@ -1,6 +1,7 @@
 #mapid { 
     height: 80vh;
     width: 100%;
+    border-radius: 5px;
 }
 
 .navbar {
@@ -52,7 +53,12 @@
     box-shadow: inset 0px 0px 0px 4px #fff;
 }
 
+::-webkit-scrollbar { 
+    display: none; 
+}
+
 .routes {
     height: 80vh;
+    overflow: scroll;
 }
 
